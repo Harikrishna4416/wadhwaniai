@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wadhwani AI – website prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F7F6;--surf:#fff;--ink:#14201F;--mute:#4A5856;--brand:#0B4F4A;--bi:#fff;--acc:#F2B31D;--line:#D5DDDB;--soft:#E3EFEC;--err:#B3261E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0E1716;--surf:#15221F;--ink:#E8EFED;--mute:#A5B4B1;--brand:#6FD0C4;--bi:#08201D;--line:#2A3B38;--soft:#1B2F2B;--err:#FF8A80}}
+*{box-sizing:border-box}html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Source Sans 3",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surf);z-index:30}
+h1,h2,h3{font-family:"Bricolage Grotesque","Source Sans 3",sans-serif;line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(2.2rem,5.5vw,3.8rem)}h2{font-size:clamp(1.5rem,3vw,2.1rem)}h3{font-size:1.2rem}
+p{margin:0 0 1em;max-width:68ch}a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.skip{position:absolute;left:-999px;background:var(--acc);color:#000;padding:.5em 1em;z-index:50}.skip:focus{left:8px;top:8px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.note{background:var(--acc);color:#1b1500;font-size:.9rem;text-align:center;padding:6px 12px}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--surf);border-bottom:1px solid var(--line);z-index:40}
+.bar{display:flex;align-items:center;gap:12px;min-height:64px}
+.logo{font:700 1.3rem "Bricolage Grotesque",sans-serif;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;margin-right:auto}
+.logo i{width:26px;height:26px;border-radius:50% 50% 50% 4px;background:var(--brand);display:inline-block;border:3px solid var(--acc)}
+nav{display:flex;gap:2px}
+nav a{padding:8px 10px;text-decoration:none;color:var(--ink);border-radius:6px;font-size:.95rem}
+nav a:hover{background:var(--soft)}nav a[aria-current=page]{background:var(--brand);color:var(--bi)}
+.ib{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 11px;font:inherit;cursor:pointer;min-height:40px}
+.ib:hover{background:var(--soft)}#menu{display:none}
+@media(max-width:900px){#menu{display:block}nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surf);flex-direction:column;padding:10px 20px;border-bottom:1px solid var(--line)}nav.open{display:flex}}
+main{min-height:60vh;outline:none}section.s{padding:48px 0}
+.hero{padding:64px 0 40px}.hero p{font-size:1.2rem;color:var(--mute)}
+.who{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 12px}
+.chip{border:2px solid var(--brand);background:var(--surf);color:var(--brand);border-radius:99px;padding:8px 18px;font-weight:600;font-size:1rem;font-family:inherit;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--brand);color:var(--bi)}
+.path{background:var(--soft);border-left:6px solid var(--acc);border-radius:8px;padding:16px 20px;min-height:76px;max-width:640px}
+.path a{margin-right:18px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:20px}
+.card h3{margin-bottom:.3em}.meta{color:var(--mute);font-size:.88rem;margin-bottom:.5em}
+.btn{display:inline-block;background:var(--brand);color:var(--bi);border:0;border-radius:8px;padding:11px 20px;font-weight:600;font-size:1rem;font-family:inherit;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.12)}.btn.o{background:none;color:var(--brand);border:2px solid var(--brand)}
+.stats{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--ink);margin-top:20px}
+.stats div{flex:1 1 200px;padding:16px 16px 16px 0}.stats b{font:700 2rem "Bricolage Grotesque",sans-serif;display:block}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{background:var(--surf);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer}
+.tab[aria-selected=true]{background:var(--ink);color:var(--bg)}
+label{display:block;font-weight:600;margin:14px 0 4px}
+input,select,textarea{width:100%;max-width:520px;font:inherit;padding:10px 12px;border:1px solid var(--mute);border-radius:8px;background:var(--surf);color:var(--ink)}
+.err{color:var(--err);font-size:.9rem;min-height:1.2em;margin:2px 0 0}
+.ok{background:var(--soft);border-left:6px solid var(--brand);padding:16px 20px;border-radius:8px}
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:22px}.tools>*{flex:1 1 200px}.tools input,.tools select{max-width:none}
+.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.tl{list-style:none;padding:0;border-left:3px solid var(--brand);margin:0 0 0 8px}.tl li{padding:0 0 18px 20px;position:relative}.tl li::before{content:"";position:absolute;left:-10px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--acc);border:3px solid var(--brand)}
+footer{background:var(--ink);color:var(--bg);padding:40px 0;margin-top:40px}footer a{color:var(--acc)}
+footer input{max-width:300px}footer .err{color:#ffb4ab}
+dialog{border:0;border-radius:12px;width:min(640px,94vw);padding:20px;background:var(--surf);color:var(--ink);margin-top:8vh}dialog::backdrop{background:#0008}
+.res{list-style:none;padding:0;max-height:50vh;overflow:auto}.res a{display:block;padding:10px;border-radius:8px;text-decoration:none}.res a:hover{background:var(--soft)}
+table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--line);padding:8px;text-align:left}.sc{overflow-x:auto}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="note">Prototype with sample content. Names, dates and figures are placeholders.</div>
+<header><div class="wrap bar">
+<a class="logo" href="#/home"><i></i>Wadhwani AI</a>
+<nav id="nav" aria-label="Main"></nav>
+<button class="ib" id="sb" aria-label="Search site">Search</button>
+<button class="ib" id="lang" aria-label="Change language">हिंदी</button>
+<button class="ib" id="menu" aria-expanded="false" aria-controls="nav">Menu</button>
+</div></header>
+<main id="main" tabindex="-1"></main>
+<footer><div class="wrap grid">
+<div><h3>Wadhwani AI</h3><p>Artificial intelligence for public good.</p><p><small>Prototype by NYB infotech</small></p></div>
+<div id="nl"></div></div></footer>
+<dialog id="sd" aria-label="Search"><div class="row"><h2>Search the site</h2><button class="ib" id="sx">Close</button></div>
+<label for="sq">Search pages, reports, news, events and jobs</label><input id="sq" type="search" autocomplete="off"><ul class="res" id="sr" aria-live="polite"></ul></dialog>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let L='en';
+const H={Home:'होम',About:'परिचय',Solutions:'समाधान',Impact:'प्रभाव',Research:'शोध',News:'समाचार',Events:'कार्यक्रम',Careers:'करियर',Contact:'संपर्क',Search:'खोजें',Menu:'मेनू','Artificial intelligence, built for public good.':'जनहित के लिए बनी कृत्रिम बुद्धिमत्ता।','Start with who you are. We will point you to the right place.':'पहले बताइए आप कौन हैं। हम आपको सही जगह ले जाएँगे।',Funder:'दानदाता',Government:'सरकार',Researcher:'शोधकर्ता','Job seeker':'नौकरी खोजने वाले',Media:'मीडिया','General public':'आम जनता'};
+const t=k=>(L==='hi'&&H[k])||k;
+const NAV=['Home','About','Solutions','Impact','Research','News','Events','Careers','Contact'];
+const SOL={Healthcare:['Screening and early detection tools that help frontline health workers reach patients sooner.','Tuberculosis case-finding support','Maternal and child health risk alerts'],Agriculture:['Advice for smallholder farmers, delivered in plain language on a basic phone.','Pest and disease early warning','Crop and weather advisories'],Education:['Tools that help teachers see how each child is reading and where to help.','Reading fluency assessment','Teacher feedback dashboards'],Governance:['Data tools that help departments plan, target and track public programmes.','Programme monitoring dashboards','Open datasets for planners']};
+const RES=[['Early warning for crop pests: a field evaluation','Report','Agriculture',2025,'How alerts reached farmers and what changed in spraying decisions.'],['Reading assessment by voice: accuracy across accents','Paper','Education',2025,'Testing speech models on children from five language groups.'],['Cough sound analysis for TB screening','Paper','Healthcare',2024,'Design and validation of an audio screening model.'],['Building data tools for state health departments','Brief','Governance',2024,'Lessons from three state partnerships.'],['Responsible AI checklist for public programmes','Report','Governance',2025,'A practical checklist for teams deploying AI in government.'],['Risk scoring for high-risk pregnancies','Paper','Healthcare',2023,'Using routine records to flag cases for follow-up.'],['Advisory messages that farmers act on','Brief','Agriculture',2023,'Which message formats led to action.'],['Teacher dashboards in practice','Report','Education',2024,'How teachers used assessment results in class.']];
+const NEWS=[['Partnership announced with a state health department','News','12 Sep 2026'],['How we test AI tools before they reach the field','Blog','28 Aug 2026'],['Statement on responsible AI in public services','Press','3 Aug 2026'],['What a farmer told us about advisories','Blog','19 Jul 2026'],['New research report published on early warning systems','News','2 Jul 2026'],['Media kit and spokesperson contacts updated','Press','20 Jun 2026']];
+const EVT=[['Responsible AI for public health','14 Nov 2026','Online','A webinar on testing and monitoring AI tools used by health workers.'],['Data for agriculture: partner workshop','5 Dec 2026','New Delhi','A working session for state agriculture departments and partners.'],['Open house: meet the research team','18 Jan 2027','Mumbai','Researchers share findings and answer questions from the public.'],['Education technology roundtable','2 Feb 2027','Online','Practitioners discuss tools that support teachers in classrooms.']];
+const JOBS=[['Data Scientist, Healthcare','Data and AI','Mumbai','Full time'],['Product Manager, Agriculture','Product','Remote (India)','Full time'],['Field Operations Associate','Operations','Lucknow','Full time'],['Research Fellow, Education','Research','Bengaluru','Contract'],['Communications Manager','Communications','New Delhi','Full time']];
+const PATH={Funder:[['Impact','See results'],['About','Our partners']],Government:[['Solutions','Our solutions'],['Impact','Case studies']],Researcher:[['Research','Browse reports']],'Job seeker':[['Careers','Open jobs']],Media:[['News','Press room'],['Contact','Media enquiries']],'General public':[['Events','Upcoming events'],['News','Latest news']]};
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+const IDX=[...NAV.map(n=>[n,'Page',n.toLowerCase()]),...RES.map(r=>[r[0],'Research · '+r[1],'research']),...NEWS.map(n=>[n[0],n[1],'news']),...EVT.map(e=>[e[0],'Event · '+e[1],'events/'+slug(e[0])]),...JOBS.map(j=>[j[0],'Job · '+j[2],'careers']),...Object.keys(SOL).map(s=>[s,'Solution','solutions'])];
+
+function field(n,lab,type='text',req=1,opts){const id='f-'+n;return `<label for="${id}">${lab}${req?'':' (optional)'}</label>`+(type==='textarea'?`<textarea id="${id}" name="${n}" rows="4" ${req?'data-r':''}></textarea>`:type==='select'?`<select id="${id}" name="${n}" data-r>${opts.map(o=>`<option>${o}</option>`).join('')}</select>`:`<input id="${id}" name="${n}" type="${type}" ${req?'data-r':''} ${type==='file'?'accept=".pdf,.doc,.docx"':''}>`)+`<p class="err" id="e-${n}" role="alert"></p>`}
+function form(id,fields,btn,msg){return `<form novalidate data-ok="${msg}" id="${id}">${fields}<p><button class="btn" type="submit">${btn}</button></p></form>`}
+
+const P={
+home:()=>`<section class="hero"><div class="wrap"><h1>${t('Artificial intelligence, built for public good.')}</h1><p>${t('Start with who you are. We will point you to the right place.')}</p>
+<div class="who" role="group" aria-label="Choose your visitor type">${Object.keys(PATH).map(k=>`<button class="chip" aria-pressed="false" data-who="${k}">${t(k)}</button>`).join('')}</div>
+<div class="path" id="path" aria-live="polite">Choose a visitor type to see where to start.</div>
+<div class="stats"><div><b>4</b>sectors: health, agriculture, education, governance</div><div><b>9</b>sections, each one or two clicks away</div><div><b>2</b>languages today, more ready to add</div></div></div></section>
+<section class="s"><div class="wrap"><h2>Our work</h2><div class="grid">${Object.entries(SOL).map(([k,v])=>`<div class="card"><h3>${k}</h3><p>${v[0]}</p><a href="#/solutions/${slug(k)}">Learn more</a></div>`).join('')}</div></div></section>
+<section class="s"><div class="wrap"><h2>Latest news</h2><div class="grid">${NEWS.slice(0,3).map(n=>`<div class="card"><div class="meta">${n[1]} · ${n[2]}</div><h3>${n[0]}</h3></div>`).join('')}</div><p><a href="#/news">All news</a></p></div></section>`,
+about:()=>`<section class="s"><div class="wrap"><h1>About us</h1><p>Wadhwani AI builds artificial intelligence tools with governments and partners to improve lives at scale. We test every tool in the field before we recommend it.</p>
+<h2>Leadership</h2><div class="grid">${['Leader name, Chief Executive','Leader name, Head of Research','Leader name, Head of Programmes'].map(n=>`<div class="card"><h3>${n.split(',')[0]}</h3><div class="meta">${n.split(',')[1]}</div></div>`).join('')}</div>
+<h2 style="margin-top:36px">Partners</h2><div class="grid">${['State governments','Foundations','Universities','Non-profit networks'].map(n=>`<div class="card">${n}</div>`).join('')}</div></div></section>`,
+solutions:(a)=>{const keys=Object.keys(SOL),cur=keys.find(k=>slug(k)===a)||keys[0];return `<section class="s"><div class="wrap"><h1>Solutions</h1><div class="tabs" role="tablist">${keys.map(k=>`<button class="tab" role="tab" aria-selected="${k===cur}" data-go="solutions/${slug(k)}">${k}</button>`).join('')}</div>
+<div class="card" role="tabpanel"><h2>${cur}</h2><p>${SOL[cur][0]}</p><ul>${SOL[cur].slice(1).map(x=>`<li>${x}</li>`).join('')}</ul><a class="btn" href="#/contact">Talk to us about ${cur.toLowerCase()}</a></div></div></section>`},
+impact:()=>`<section class="s"><div class="wrap"><h1>Impact</h1><p>Results and case studies from the field. Figures below are placeholders.</p><div class="grid">${[['Early pest warnings','Farmers in three states received alerts in their own language.','Agriculture'],['Faster TB screening','Health workers used audio screening to prioritise tests.','Healthcare'],['Reading support','Teachers used results to group children by need.','Education']].map(c=>`<div class="card"><div class="meta">${c[2]}</div><h3>${c[0]}</h3><p>${c[1]}</p><details><summary>Read the case study</summary><p>The full story, with the problem, what we built, how it was tested and what changed, appears here. Staff add case studies in the CMS.</p></details></div>`).join('')}</div></div></section>`,
+research:()=>`<section class="s"><div class="wrap"><h1>Research</h1><div class="tools"><div><label for="rq">Search reports</label><input id="rq" type="search"></div><div><label for="ra">Area</label><select id="ra"><option>All areas</option>${Object.keys(SOL).map(k=>`<option>${k}</option>`).join('')}</select></div><div><label for="rt">Type</label><select id="rt"><option>All types</option><option>Report</option><option>Paper</option><option>Brief</option></select></div></div><p id="rc" aria-live="polite"></p><div class="grid" id="rl"></div></div></section>`,
+news:()=>`<section class="s"><div class="wrap"><h1>News</h1><div class="tabs">${['All','News','Blog','Press'].map((k,i)=>`<button class="tab" data-nf="${k}" aria-pressed="${!i}" aria-selected="${!i}">${k==='Press'?'Press room':k}</button>`).join('')}</div><div class="grid" id="nlst"></div></div></section>`,
+events:(a)=>{const e=EVT.find(x=>slug(x[0])===a);if(a&&e)return `<section class="s"><div class="wrap"><p><a href="#/events">All events</a></p><h1>${e[0]}</h1><div class="meta">${e[1]} · ${e[2]}</div><p>${e[3]}</p><h2>Register</h2>${form('reg',field('name','Full name')+field('email','Email','email'),'Register for event','You are registered. A confirmation will be sent to your email.')}</div></section>`;
+return `<section class="s"><div class="wrap"><h1>Events</h1><div class="grid">${EVT.map(e=>`<div class="card"><div class="meta">${e[1]} · ${e[2]}</div><h3>${e[0]}</h3><p>${e[3]}</p><a href="#/events/${slug(e[0])}">Details and registration</a></div>`).join('')}</div></div></section>`},
+careers:()=>`<section class="s"><div class="wrap"><h1>Careers</h1><div class="grid">${JOBS.map((j,i)=>`<div class="card"><div class="meta">${j[1]} · ${j[2]} · ${j[3]}</div><h3>${j[0]}</h3><button class="btn o" data-apply="${i}">Apply</button></div>`).join('')}</div>
+<div id="app" style="margin-top:32px" hidden><h2 id="at" tabindex="-1"></h2>${form('job',field('name','Full name')+field('email','Email','email')+field('phone','Phone','tel',0)+field('cv','Resume (PDF or Word)','file')+field('note','Why this role?','textarea'),'Send application','Application received. We will email you within two weeks.')}</div></div></section>`,
+contact:()=>`<section class="s"><div class="wrap grid"><div><h1>Contact</h1><p>Write to us and we will reply within two working days.</p>${form('ct',field('name','Full name')+field('email','Email','email')+field('topic','Topic','select',1,['General','Partnerships','Media enquiry','Careers'])+field('msg','Message','textarea'),'Send message','Message sent. Thank you for writing to us.')}</div>
+<div class="card"><h3>Media enquiries</h3><p>press@example.org</p><h3>General</h3><p>info@example.org</p></div></div></section>`
+};
+
+function render(){
+ const r=(location.hash.replace(/^#\/?/,'')||'home').split('/'),pg=P[r[0]]?r[0]:'home';
+ $('#nav').innerHTML=NAV.map(n=>`<a href="#/${n.toLowerCase()}" ${n.toLowerCase()===pg?'aria-current="page"':''}>${t(n)}</a>`).join('');
+ $('#sb').textContent=t('Search');$('#menu').textContent=t('Menu');$('#lang').textContent=L==='en'?'हिंदी':'English';document.documentElement.lang=L;
+ $('#main').innerHTML=P[pg](r[1]);document.title='Wadhwani AI – '+t(pg[0].toUpperCase()+pg.slice(1));
+ $('#nav').classList.remove('open');$('#menu').setAttribute('aria-expanded','false');
+ if(pg==='research')res();if(pg==='news')news('All');
+ $('#nl').innerHTML=`<h3>Newsletter</h3>`+form('news-f',field('email','Email address','email'),'Subscribe','Subscribed. Please check your inbox to confirm.');
+}
+function res(){const q=$('#rq').value.toLowerCase(),a=$('#ra').value,ty=$('#rt').value;
+ const f=RES.filter(r=>(a==='All areas'||r[2]===a)&&(ty==='All types'||r[1]===ty)&&(r[0]+r[4]).toLowerCase().includes(q));
+ $('#rc').textContent=f.length+' of '+RES.length+' publications';
+ $('#rl').innerHTML=f.length?f.map(r=>`<div class="card"><div class="meta">${r[1]} · ${r[2]} · ${r[3]}</div><h3>${r[0]}</h3><p>${r[4]}</p><a href="#/research" onclick="return false">Download PDF</a></div>`).join(''):'<div class="card">No publications match. Clear a filter or try another word.</div>'}
+function news(k){$$('[data-nf]').forEach(b=>{const on=b.dataset.nf===k;b.setAttribute('aria-pressed',on);b.setAttribute('aria-selected',on)});
+ $('#nlst').innerHTML=NEWS.filter(n=>k==='All'||n[1]===k).map(n=>`<div class="card"><div class="meta">${n[1]} · ${n[2]}</div><h3>${n[0]}</h3></div>`).join('')}
+
+document.addEventListener('click',e=>{
+ const c=e.target.closest('button,a');if(!c)return;
+ if(c.dataset.who){$$('[data-who]').forEach(b=>b.setAttribute('aria-pressed',b===c));$('#path').innerHTML=PATH[c.dataset.who].map(p=>`<a href="#/${p[0].toLowerCase()}">${p[1]}</a>`).join('')}
+ if(c.dataset.go)location.hash='#/'+c.dataset.go;
+ if(c.dataset.nf)news(c.dataset.nf);
+ if(c.dataset.apply){$('#app').hidden=false;$('#at').textContent='Apply: '+JOBS[c.dataset.apply][0];$('#at').focus()}
+ if(c.id==='menu'){const o=$('#nav').classList.toggle('open');c.setAttribute('aria-expanded',o)}
+ if(c.id==='lang'){L=L==='en'?'hi':'en';render()}
+ if(c.id==='sb'){$('#sd').showModal();$('#sq').focus();find()}
+ if(c.id==='sx')$('#sd').close();
+ if(c.closest('.res'))$('#sd').close();
+});
+document.addEventListener('input',e=>{if(['rq','ra','rt'].includes(e.target.id))res();if(e.target.id==='sq')find()});
+document.addEventListener('change',e=>{if(['ra','rt'].includes(e.target.id))res()});
+document.addEventListener('submit',e=>{
+ e.preventDefault();const f=e.target;let bad=0,first;
+ f.querySelectorAll('[data-r]').forEach(i=>{const m=f.querySelector('#e-'+i.name);let s='';
+  if(!i.value.trim())s='This field is required.';else if(i.type==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value))s='Enter an email like name@example.org.';
+  m.textContent=s;i.setAttribute('aria-invalid',!!s);if(s){bad++;first=first||i}});
+ if(bad){first.focus();return}
+ const d=document.createElement('div');d.className='ok';d.setAttribute('role','status');d.tabIndex=-1;d.textContent=f.dataset.ok;f.replaceWith(d);d.focus()});
+function find(){const q=$('#sq').value.toLowerCase().trim();
+ const r=IDX.filter(i=>!q||i[0].toLowerCase().includes(q)||i[1].toLowerCase().includes(q)).slice(0,12);
+ $('#sr').innerHTML=r.length?r.map(i=>`<li><a href="#/${i[2]}"><b>${i[0]}</b><br><small>${i[1]}</small></a></li>`).join(''):'<li>No results. Try a shorter word.</li>'}
+addEventListener('hashchange',()=>{render();scrollTo(0,0);$('#main').focus({preventScroll:true})});
+render();
+</script></body></html>
